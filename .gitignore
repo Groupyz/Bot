@@ -16,9 +16,4 @@ yarn.lock
 # Ignore lerna debug logs
 lerna-debug.log
 
-# Ignore NPM dependency files
-package-lock.json
-shrinkwrap.yaml
-
-
 .wwebjs_auth/session/Default/
