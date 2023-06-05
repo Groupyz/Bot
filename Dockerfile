@@ -1,5 +1,6 @@
 FROM node:17.0.0-alpine
 
+RUN apk add --no-cache bash
 RUN apk add chromium
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
@@ -14,5 +15,3 @@ RUN npm install
 COPY . .
 
 EXPOSE 3001
-
-CMD ["node", "whats-app-bot-events/index.js"]
