@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    restart: always
     ports:
       - 3001:3001
     networks:
@@ -13,6 +14,7 @@ services:
       BROWSER_URL: 'ws://browser:3000'
     depends_on:
       - browser
+    command: bash -c 'while !</dev/tcp/browser/3000; do sleep 1; done; node whats-app-bot-events/index.js'
   browser:
     image: browserless/chrome:latest
     hostname: browser
