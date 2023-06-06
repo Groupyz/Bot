@@ -1,0 +1,19 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore npm debug log
+npm-debug.log*
+
+# Ignore yarn lockfile
+yarn.lock
+
+# Ignore pnpm store
+.pnpm/
+
+# Ignore Rush artifacts
+.rush/
+
+# Ignore lerna debug logs
+lerna-debug.log
+
+.wwebjs_auth/session/Default/
