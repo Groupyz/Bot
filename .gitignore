@@ -16,4 +16,4 @@ yarn.lock
 # Ignore lerna debug logs
 lerna-debug.log
 
-.wwebjs_auth/session/Default/
+.wwebjs_auth/session
