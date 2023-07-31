@@ -7,6 +7,10 @@ Build & Run Docker Containers
   docker compose up --build
 ```
 
+## After the app is running:
+1. Wait a few sec.
+2. Send a GET /qr request (http://localhost:3001/qr) to get DataURL of the qr code.
+
 ## Related
 
 [Whatapp-web.js](https://wwebjs.dev/)
