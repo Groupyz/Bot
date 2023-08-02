@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Client, LocalAuth } = require("whatsapp-web.js");
 const QRCode = require("qrcode");
-
+const qrcode = require("qrcode-terminal");
 router.use(express.json());
 
 var client = new Client({
@@ -18,9 +18,11 @@ var client = new Client({
 
 router.get("/qr", (req, res) => {
   client.on("qr", (qr) => {
+    //print qr for testing
+    qrcode.generate(qr, { small: true });
+
     //qr code image parameters
     var opts = init_image_attrubtes();
-
     //convert qr to DataURL
     QRCode.toDataURL(qr, opts, function (err, url) {
       if (err) throw err;
@@ -35,6 +37,16 @@ router.get("/qr", (req, res) => {
   });
 
   client.initialize().catch(console.error);
+});
+
+router.get("/chats", (req, res) => {
+  client.getChats().then((chats) => {
+    if (!chats) {
+      return res.status(500).send("Error: could not export chats");
+    }
+
+    return res.status(200).send(chats);
+  });
 });
 
 init_image_attrubtes = () => {
