@@ -49,6 +49,19 @@ router.get("/chats", (req, res) => {
   });
 });
 
+router.post('/sendMessage', (req, res) => {
+  group_id = req.body.group_id + "@g.us";
+  message_body = req.body.message_body;
+  message = client.sendMessage(group_id, message_body);
+
+  if (!message) {
+     return res.status(404).send('Error: Message was not send.')
+  }
+
+  return res.status(200).send("Message:" + message_body + "\n" + "was sent to group: " + group_id);
+
+});
+
 init_image_attrubtes = () => {
   return {
     errorCorrectionLevel: "H",
