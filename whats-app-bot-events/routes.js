@@ -82,12 +82,6 @@ sendMessages = async (groups_ids, message_body) => {
 
 };
 
-//   for (id in group_id) {
-//     id = id + "@g.us";
-//     client.sendMessage(id, message_body);
-//   }
-//     return groups_ids_list
-//  };
 
 init_image_attrubtes = () => {
   return {
