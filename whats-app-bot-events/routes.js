@@ -49,18 +49,45 @@ router.get("/chats", (req, res) => {
   });
 });
 
-router.post('/sendMessage', (req, res) => {
-  group_id = req.body.group_id + "@g.us";
+router.post("/sendMessage", (req, res) => {
+  group_id = req.body.group_id;
   message_body = req.body.message_body;
-  message = client.sendMessage(group_id, message_body);
+  message = sendMessages(group_id, message_body);
 
-  if (!message) {
-     return res.status(404).send('Error: Message was not send.')
+  if ("except" in message) {
+    return res.status(404).send(message);
+  }
+  
+  return res.status(200).send("Message: " + message_body + "was sent succesfully to groups: " + group_id);
+  
+});
+
+sendMessages = async (groups_ids, message_body) => {
+  const failed_groups = [];
+  for (const id of groups_ids) {
+    const formattedId = id + "@g.us";
+    try {
+      await client.sendMessage(formattedId, message_body);
+    } catch (error) {
+      console.error(`Error sending message to group: ${formattedId}:`, error);
+      failed_groups.push(error);
+    }
   }
 
-  return res.status(200).send("Message:" + message_body + "\n" + "was sent to group: " + group_id);
+  if (!failed_groups) {
+    return (
+      "Message" + message_body + "was send to all groups except:" + failed_groups
+    )
+  }
 
-});
+};
+
+//   for (id in group_id) {
+//     id = id + "@g.us";
+//     client.sendMessage(id, message_body);
+//   }
+//     return groups_ids_list
+//  };
 
 init_image_attrubtes = () => {
   return {
