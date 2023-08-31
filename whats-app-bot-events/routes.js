@@ -41,11 +41,16 @@ router.get("/qr", (req, res) => {
 
 router.get("/chats", (req, res) => {
   client.getChats().then((chats) => {
-    if (!chats) {
-      return res.status(500).send("Error: could not export chats");
-    }
+  user_id = req.query.userId;
 
-    return res.status(200).send(chats);
+    if (!chats) {
+      return res.status(500).send("Error: could not export chats of user " + user_id);
+    }
+    response = {
+      "user id": user_id,
+      "chats": chats
+    }
+    return res.status(200).send(response);
   });
 });
 
