@@ -41,16 +41,10 @@ router.get("/qr", (req, res) => {
 
 router.get("/chats", (req, res) => {
   client.getChats().then((chats) => {
-  user_id = req.query.userId;
-
     if (!chats) {
-      return res.status(500).send("Error: could not export chats of user " + user_id);
+      return res.status(500).send("Error: could not export chats");
     }
-    response = {
-      "user id": user_id,
-      "chats": chats
-    }
-    return res.status(200).send(response);
+    return res.status(200).send(chats);
   });
 });
 
@@ -63,25 +57,25 @@ router.post("/sendMessage", (req, res) => {
     return res.status(404).send(message);
   }
   
-  return res.status(200).send("Message: " + message_body + "was sent succesfully to groups: " + group_id);
+  return res.status(200).send("Message: " + message_body + " was sent succesfully to groups: " + group_id);
   
 });
 
 sendMessages = async (groups_ids, message_body) => {
   const failed_groups = [];
   for (const id of groups_ids) {
-    const formattedId = id + "@g.us";
+    const cur_id = id
     try {
-      await client.sendMessage(formattedId, message_body);
+      await client.sendMessage(cur_id, message_body);
     } catch (error) {
-      console.error(`Error sending message to group: ${formattedId}:`, error);
+      console.error(`Error sending message to group: ${cur_id}:`, error);
       failed_groups.push(error);
     }
   }
 
   if (!failed_groups) {
     return (
-      "Message" + message_body + "was send to all groups except:" + failed_groups
+      "Message: " + message_body + "was send to all groups except:" + failed_groups
     )
   }
 
