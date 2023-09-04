@@ -49,15 +49,15 @@ router.get("/chats", (req, res) => {
 });
 
 router.post("/sendMessage", (req, res) => {
-  group_id = req.body.group_id;
+  group_ids = req.body.group_ids;
   message_body = req.body.message_body;
-  message = sendMessages(group_id, message_body);
+  message = sendMessages(group_ids, message_body);
 
   if ("except" in message) {
     return res.status(404).send(message);
   }
   
-  return res.status(200).send("Message: " + message_body + " was sent succesfully to groups: " + group_id);
+  return res.status(200).send("Message: " + message_body + " was sent succesfully to groups: " + group_ids);
   
 });
 
